@@ -15,10 +15,12 @@ df['species'] = [iris.target_names[t] for t in iris.target]
 # add some noise to the data
 # adding nans
 for _ in range(5):
-    r = np.random.randint(0, len(df))
+    r = np.random.randint(0, len(df)) #
     c = np.random.randint(0, 4)
     df.iloc[r, c] = np.nan
 
+    # random rows and random columns
+    
 # adding duplicates
 dupes = df.sample(n=3)
 df = pd.concat([df, dupes], ignore_index=True)
