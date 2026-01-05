@@ -1,34 +1,61 @@
-# Iris Data Analysis
+# Data Analysis Mini-Project
 
-A simple Python project to explore and classify the Iris dataset.
+Welcome! This project explores two machine learning concepts using Python:
+1. **Classification**: Identifying Iris flower species.
+2. **Regression**: Predicting salary based on years of experience.
+
+The code is written to be simple and easy to understand.
 
 ## Setup
 
-First, grab the dependencies:
+First, let's install the tools we need:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+---
 
-1. **Generate Data**: This script pulls the data from sklearn and adds some noise (missing values, duplicates) just so we have something to clean up.
+## Part 1: Iris Classification
+
+This part classifies flowers into species based on their measurements.
+
+1. **Create Data**:
    ```bash
    python generate_data.py
    ```
+   *Creates `iris.csv` with some noise for practice.*
 
-2. **Run Analysis**: This does the heavy lifting—cleaning, EDA, plotting, and modeling.
+2. **Run Analysis**:
    ```bash
    python analysis.py
    ```
+   *Loads data, cleans it, and trains a Logistic Regression model.*
+
+---
+
+## Part 2: Salary Regression
+
+This part predicts how much someone should earn based on their experience.
+
+1. **Create Data**:
+   ```bash
+   python generate_salary_data.py
+   ```
+   *Creates `Salary_Data.csv` with some random "messy" data.*
+
+2. **Run Analysis**:
+   ```bash
+   python regression_analysis.py
+   ```
+   *Loads data, fills missing values, and trains a Linear Regression model.*
+
+---
 
 ## Output
 
-- **Plots**: Check the `output/` folder for pairplots, heatmaps, and confusion matrices.
-- **Model**: Uses Logistic Regression. Currently hitting **100% accuracy** on the test set.
+After running the scripts, look in the `output/` folder. You will find:
+- **visualizations**: Scatter plots, heatmaps, and confusion matrices.
+- **results**: Graphs showing how well the models performed.
 
-## Files
-
-- `generate_data.py`: Creates `iris.csv`.
-- `analysis.py`: Main script for stats and ML.
-- `output/`: Generated images.
+Enjoy coding!
