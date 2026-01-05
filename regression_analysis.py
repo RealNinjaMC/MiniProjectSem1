@@ -29,19 +29,20 @@ except FileNotFoundError:
 # 2. Clean the data
 print("\nCleaning the data")
 
-# Handle missing values
+# Handle missing values (safe & future-proof)
 missing = df.isnull().sum()
 if missing.sum() > 0:
     print("Missing values found, filling with mean")
-    df['YearsExperience'].fillna(df['YearsExperience'].mean(), inplace=True)
-    df['Salary'].fillna(df['Salary'].mean(), inplace=True)
+    df['YearsExperience'] = df['YearsExperience'].fillna(df['YearsExperience'].mean())
+    df['Salary'] = df['Salary'].fillna(df['Salary'].mean())
 else:
     print("No missing values found")
 
 # Remove duplicates
 before = len(df)
-df.drop_duplicates(inplace=True)
+df = df.drop_duplicates()
 after = len(df)
+
 if before != after:
     print(f"Removed {before - after} duplicate rows")
 else:
@@ -106,11 +107,13 @@ print("Regression result saved in output folder")
 plt.close()
 
 
-# 6. Make a prediction
+# 6. Make a prediction (no sklearn warning)
 print("\nMaking a sample prediction")
 
 years = 6.5
-pred_salary = model.predict([[years]])[0]
+years_df = pd.DataFrame([[years]], columns=['YearsExperience'])
+pred_salary = model.predict(years_df)[0]
+
 print(f"Estimated salary for {years} years of experience: ${pred_salary:,.2f}")
 
 print("\nProcess completed successfully")
