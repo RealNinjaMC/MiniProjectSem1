@@ -7,38 +7,35 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 import os
 
-print("--- Starting Iris Analysis ---")
+print("Starting Iris Analysis")
 
-# First things first: we need a folder to save our beautiful plots
+# create the folder if it doesnt exist
 if not os.path.exists('output'):
     os.makedirs('output')
 
-# 1. Load the Data
-# ----------------
+# 1. Loading the data
 print("\n1. Loading the data...")
 try:
     df = pd.read_csv('iris.csv')
-    print("Got it! Here's a sneak peek:")
+    print("Data Loaded")
     print(df.head())
 except FileNotFoundError:
-    print("Oops, I couldn't find 'iris.csv'. Did you run 'generate_data.py'?")
+    print("File not found. Please run generate_data.py first.")
     exit()
 
 # 2. Clean the Data
-# -----------------
-print("\n2. Cleaning up the mess...")
+print("\n2. Cleaning up the data...")
 
-# Let's check for missing values
+# checking for missing info
 print("Checking for missing info...")
 missing = df.isnull().sum()
 print(missing)
 
-# If we find numbers missing, let's fill them with the average
 print("Filling missing numbers with the average...")
 num_cols = df.select_dtypes(include=[np.number]).columns
 df[num_cols] = df[num_cols].fillna(df[num_cols].mean())
 
-# Now let's handle those pesky duplicates
+# handling duplicates
 initial_rows = len(df)
 print(f"Row count before cleaning: {initial_rows}")
 df.drop_duplicates(inplace=True)
@@ -46,23 +43,21 @@ print(f"Row count after cleaning: {len(df)}")
 print(f"Removed {initial_rows - len(df)} duplicates.")
 
 # 3. Explore the Data
-# -------------------
-print("\n3. Taking a closer look (EDA)...")
+print("\n3. Exploring the data...")
 print("Here's the summary stats:")
 print(df.describe())
 
 print("Drawing some charts...")
 
-# Pairplot: see how features relate to each other
-print("- Saving pairplot...")
+# pairplot
+print("Saving pairplot...")
 sns.pairplot(df, hue='species')
 plt.savefig('output/pairplot.png')
 plt.close()
 
-# Correlation Heatmap: see what's connected
+# correlation heatmap
 print("- Saving correlation heatmap...")
 plt.figure(figsize=(8, 6))
-# We only want to correlate the numbers, not the species names
 sns.heatmap(df[num_cols].corr(), annot=True, cmap='coolwarm')
 plt.title('How features allow correlate')
 plt.savefig('output/correlation_heatmap.png')
